@@ -56,7 +56,13 @@ class BlogsAPI(Resource):
         Sample Error message : "Blog_Id 2 doesn't exist"
         
         Else, update the details of blog, identified by given 'blog_id', and return the updated blog details.
+        
         '''
+        if blog_id not in blogs:
+          abort(404, message="Blog_Id {} doesn't exist".format(blog_id))
+        else:
+          blogs[blog_id] = request.form['blog']
+          return blogs[blog_id]
         
     
     def delete(self, blog_id):
@@ -69,6 +75,11 @@ class BlogsAPI(Resource):
         
         Sample Delete response message : "Blog with Id 3 is deleted"
         '''
+        if blog_id not in blogs:
+          abort(404, message="Blog_Id {} doesn't exist".format(blog_id))
+        else:
+          del blogs[blog_id]
+          return "Blog with Id {} is deleted".format(blog_id)
         
     
 api.add_resource(BlogsAPI, '/blogs/',
