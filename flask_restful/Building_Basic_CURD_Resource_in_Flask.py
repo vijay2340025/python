@@ -58,10 +58,20 @@ class BlogsAPI(Resource):
         Else, update the details of blog, identified by given 'blog_id', and return the updated blog details.
         
         '''
+
         if blog_id not in blogs:
           abort(404, message="Blog_Id {} doesn't exist".format(blog_id))
         else:
-          blogs[blog_id] = request.form['blog']
+          try:
+            if request.form['title'] != None:
+              blogs[blog_id]['title'] = request.form['title']
+          except:
+            pass
+          try:
+            if request.form['article_text'] != None:
+              blogs[blog_id]['article_text'] = request.form['article_text']
+          except:
+            pass
           return blogs[blog_id]
         
     
